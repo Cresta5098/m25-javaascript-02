@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uso do CSS</title>
+    <style>
+        /* estilo para tudo no meu HTML */
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
+        /* selecionando somente 1 elemento com base na tag dele */
+        p {
+            font-size: medium;
+            color: blue;
+        }
+        /* configuração especial para o parágrafo que esta na seção 02 mas é filho DIRETO*/
+        #secao-02 > p{
+            color: red  ;
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <section id="Uso-comum">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione placeat quidem quo cum ea non quibusdam odio itaque mollitia consequatur facere ipsa, numquam, sapiente doloribus cupiditate accusamus minus temporibus. Error.
+            </p>
+        </section>
+        <section id="secao-02">
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod ad illum reiciendis voluptatibus illo fuga, corporis eum eos nulla rem modi! Inventore officia maxime a perspiciatis nostrum ducimus ipsum magni!
+            </p>
+        <section>
+            <p>
+                teste
+            </p>
+        </section>
+        </section>
+    </main>
+</body>
+</html>
