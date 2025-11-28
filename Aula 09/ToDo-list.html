@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>To‑do List</title>
+  <style>
+    :root{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f4f6f8;margin:0;padding:20px}
+    .card{background:#fff;width:100%;max-width:560px;padding:20px;border-radius:12px;box-shadow:0 6px 24px rgba(15,20,30,0.08)}
+    h1{margin:0 0 12px;font-size:20px}
+    .controls{display:flex;gap:8px}
+    input[type="text"]{flex:1;padding:10px 12px;border-radius:8px;border:1px solid #d7dde3;font-size:14px}
+    button{padding:10px 12px;border-radius:8px;border:0;background:#2563eb;color:white;font-weight:600;cursor:pointer}
+    button.remove{background:#ef4444}
+    ul{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:8px}
+    li{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;background:#f8fafc;border:1px solid #eef2f7}
+    .task-text{word-break:break-word}
+    .empty{color:#64748b;font-size:14px;text-align:center;padding:12px}
+    @media (max-width:420px){button{padding:10px;font-size:13px}}
+  </style>
+</head>
+<body>
+  <main class="card" role="application" aria-label="Lista de tarefas">
+    <h1>To‑do List</h1>
+    <div class="controls">
+      <input id="todo-input" type="text" placeholder="Escreva uma tarefa e pressione Enter ou clique em Adicionar" aria-label="Campo de nova tarefa" />
+      <button id="add-btn">Adicionar</button>
+    </div>
+
+    <ul id="todo-list" aria-live="polite"></ul>
+    <div id="empty-state" class="empty">Nenhuma tarefa ainda.</div>
+  </main>
+
+  <script>
+    // Elementos
+    const input = document.getElementById('todo-input');
+    const addBtn = document.getElementById('add-btn');
+    const list = document.getElementById('todo-list');
+    const emptyState = document.getElementById('empty-state');
+
+    // Função para atualizar visibilidade do estado vazio
+    function refreshEmptyState() {
+      emptyState.style.display = list.children.length === 0 ? 'block' : 'none';
+    }
+
+    // Cria um item de lista com botão Remover
+    function createTodoItem(text) {
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.className = 'task-text';
+      span.textContent = text;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove';
+      removeBtn.textContent = 'Remover';
+      removeBtn.setAttribute('aria-label', `Remover tarefa: ${text}`);
+
+      removeBtn.addEventListener('click', () => {
+        li.remove();
+        refreshEmptyState();
+      });
+
+      li.appendChild(span);
+      li.appendChild(removeBtn);
+      return li;
+    }
+
+    // Adiciona tarefa (se houver texto)
+    function addTodo() {
+      const value = input.value.trim();
+      if (!value) return;
+      const item = createTodoItem(value);
+      list.appendChild(item);
+      input.value = '';
+      input.focus();
+      refreshEmptyState();
+    }
+
+    // Eventos
+    addBtn.addEventListener('click', addTodo);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') addTodo();
+    });
+
+    // Estado inicial
+    refreshEmptyState();
+  </script>
+</body>
+</html>
